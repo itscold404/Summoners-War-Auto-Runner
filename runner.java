@@ -161,34 +161,39 @@ class gui extends JFrame{
 							mins = 59;
 						}
 					}
-				}, 1000, 1000);
+				}, 1000, 1000); //1000 because 1000 milli second in one second
 				
 				frame3.getContentPane().setLayout(null);
 		        frame3.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		        
+				//find random time(in miliseconds) between max and min time to wait before program
+				//proceeds with he gamemode by. the program will control the mouse movement and clicks
+				//randomization is done to avoid cheat detection
 				mouse_delay.schedule(new TimerTask() {
 					public void run() {
 						int rand = (int)(Math.random() * (max_wait - min_wait +1) + min_wait) * 1000;
 						try {
+							//if unable to proceed with the game because "energy" is low, control mouse
+							//movements and clicks to buy energy
 							if(mouse.check("out of energy")) {
 								mouse.moveMouse("shop");
-								// buy energy from shop
 								mouse.moveMouse("60 crystals");
-								
-								//exit out and click replay
 								mouse.moveMouse("yes");
 								mouse.moveMouse("ok");
 								mouse.moveMouse("close shop");
+
+								//depending on the gamemode the user selected, automate that gamemode
 								if(cairos_bool)
 									mouse.moveMouse("start battle for cairos");
 								if(raid_bool)
 									mouse.moveMouse("start battle for raid");
 							}
 							
+							//pause for a random amount of time(avoid cheat detection)
 							Thread.sleep(rand);
 							
+							//if "battle ended" screen appears, control mouse to restart the battle
 							if(mouse.check("battle ended")) {
-								System.out.println("battle ended detected");
 								mouse.moveMouse("replay");
 								Thread.sleep((int)(Math.random() * (3 - 2 +1) + 2) * 1000);
 								if(mouse.check("sort needed"))
@@ -203,7 +208,7 @@ class gui extends JFrame{
 							e.printStackTrace();
 						}
 					}
-				}, 1000, 1000);
+				}, 1000, 1000); //1000 because 1000 milli second in one second
 		        	
 			}
 			
@@ -215,6 +220,7 @@ public class runner {
 
 	public static void main(String[] args){
 		gui GUI = new gui();
+		//creates the start screen
 		GUI.getContentPane().setLayout(null);
 		GUI.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GUI.setSize(600,300);
