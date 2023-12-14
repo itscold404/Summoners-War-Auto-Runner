@@ -1,4 +1,4 @@
-# Summoners War Auto-player
+# Summoners War Autorunner
 Run dungeons in Summoners War automatically when a dungeon run ends by creating a timer to input how long you want to automate for. Built-in randomizer helps avoid cheat detection
 
 How to use:
